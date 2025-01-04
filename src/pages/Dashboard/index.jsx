@@ -34,6 +34,7 @@ import SocialSource from "./SocialSource";
 import ActivityComp from "./ActivityComp";
 import TopCities from "./TopCities";
 import LatestTranaction from "./LatestTranaction";
+import useInstallPrompt from "../../helpers/pwa_installment";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -45,21 +46,19 @@ import { withTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
-const Dashboard = props => {
+const Dashboard = (props) => {
   const [modal, setmodal] = useState(false);
   const [subscribemodal, setSubscribemodal] = useState(false);
 
   const selectDashboardState = (state) => state.Dashboard;
   const DashboardProperties = createSelector(
     selectDashboardState,
-      (dashboard) => ({
-        chartsData: dashboard.chartsData
-      })
+    (dashboard) => ({
+      chartsData: dashboard.chartsData,
+    })
   );
 
-  const {
-      chartsData
-  } = useSelector(DashboardProperties);
+  const { chartsData } = useSelector(DashboardProperties);
 
   const reports = [
     { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
@@ -72,9 +71,14 @@ const Dashboard = props => {
   ];
 
   useEffect(() => {
-    setTimeout(() => {
-      setSubscribemodal(true);
-    }, 2000);
+    if (isPWAInstalled()) {
+      console.log("PWA is installed.");
+    } else {
+      console.log("PWA is not installed.");
+      setTimeout(() => {
+        setSubscribemodal(true);
+      }, 2000);
+    }
   }, []);
 
   const [periodData, setPeriodData] = useState([]);
@@ -84,7 +88,7 @@ const Dashboard = props => {
     setPeriodData(chartsData);
   }, [chartsData]);
 
-  const onChangeChartPeriod = pType => {
+  const onChangeChartPeriod = (pType) => {
     setPeriodType(pType);
     dispatch(onGetChartsData(pType));
   };
@@ -94,8 +98,35 @@ const Dashboard = props => {
     dispatch(onGetChartsData("yearly"));
   }, [dispatch]);
 
+  //PWA
+  const installPrompt = useInstallPrompt();
+
+  const handleInstallClick = () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+    }
+  };
+  const isPWAInstalled = () => {
+    // Check for iOS standalone mode
+    if (window.navigator.standalone) {
+      return true; // PWA is installed on iOS
+    }
+
+    // Check for Android and desktop standalone mode
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      return true; // PWA is installed on Android or desktop
+    }
+
+    // Fallback: Check if the appinstalled event has been fired
+    const pwaInstalledFlag = localStorage.getItem("pwaInstalled");
+    if (pwaInstalledFlag === "true") {
+      return true; // PWA is installed based on custom tracking
+    }
+
+    return false; // PWA is not installed
+  };
   //meta title
-  document.title="Dashboard | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Dashboard";
 
   return (
     <React.Fragment>
@@ -197,7 +228,10 @@ const Dashboard = props => {
                     </div>
                   </div>
                   {/* <div className="clearfix"></div> */}
-                  <StackedColumnChart periodData={periodData} dataColors='["--bs-primary", "--bs-warning", "--bs-success"]'/>
+                  <StackedColumnChart
+                    periodData={periodData}
+                    dataColors='["--bs-primary", "--bs-warning", "--bs-success"]'
+                  />
                 </CardBody>
               </Card>
             </Col>
@@ -247,18 +281,26 @@ const Dashboard = props => {
           <div className="text-center mb-4">
             <div className="avatar-md mx-auto mb-4">
               <div className="avatar-title bg-light  rounded-circle text-primary h1">
-                <i className="mdi mdi-email-open"></i>
+                <i className="mdi mdi-cellphone-cog"></i>
               </div>
             </div>
 
             <div className="row justify-content-center">
               <div className="col-xl-10">
-                <h4 className="text-primary">Subscribe !</h4>
+                <h4 className="text-primary">Progressive Web App!</h4>
                 <p className="text-muted font-size-14 mb-4">
-                  Subscribe our newletter and get notification to stay update.
+                  Make it easier to access.
                 </p>
+                <div className="text-center mt-4">
+                  <Link
+                    onClick={handleInstallClick}
+                    className="btn btn-primary btn-md"
+                  >
+                    Install <i className="mdi mdi-arrow-right ms-1" />
+                  </Link>
+                </div>
 
-                <div
+                {/* <div
                   className="input-group rounded bg-light"
                 >
                   <Input
@@ -269,7 +311,7 @@ const Dashboard = props => {
                   <Button color="primary" type="button" id="button-addon2">
                     <i className="bx bxs-paper-plane"></i>
                   </Button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
