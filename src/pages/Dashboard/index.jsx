@@ -45,7 +45,7 @@ import { withTranslation } from "react-i18next";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
-import DemoTestNotif from "./demoTestNotif";
+import DemoTestNotif from "./DemoTestNotif";
 
 const Dashboard = (props) => {
   const [modal, setmodal] = useState(false);
