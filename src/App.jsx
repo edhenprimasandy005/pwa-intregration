@@ -70,7 +70,6 @@ const App = (props) => {
   }
 
   const Layout = getLayout(layoutType);
-
   return (
     <React.Fragment>
       <Routes>

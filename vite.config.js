@@ -4,21 +4,28 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     VitePWA({
       workbox: {
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        swDest: 'sw.js',
       },
       registerType: "autoUpdate",
+      injectRegister: 'auto',
       devOptions: {
         enabled: true,
       },
       manifest: {
         name: "My PWA App",
         short_name: "PWA",
+        display: 'standalone',
+        start_url: '/',
+        background_color: '#ffffff',
+        theme_color: '#000000',
         description: "A Vite React PWA application",
-        theme_color: "#ffffff",
         icons: [
           {
             src: "/images/pwa/192.png",
