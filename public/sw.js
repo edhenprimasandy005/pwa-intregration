@@ -23,3 +23,11 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+self.addEventListener('push', function(event) {
+  const data = event.data ? event.data.text() : 'No payload';
+  self.registration.showNotification('Push Notification', {
+    body: data,
+    icon: '/images/pwa/192.png'
+  });
+});

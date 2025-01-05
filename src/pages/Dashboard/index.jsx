@@ -45,6 +45,7 @@ import { withTranslation } from "react-i18next";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
+import DemoTestNotif from "./demoTestNotif";
 
 const Dashboard = (props) => {
   const [modal, setmodal] = useState(false);
@@ -75,9 +76,9 @@ const Dashboard = (props) => {
       console.log("PWA is installed.");
     } else {
       console.log("PWA is not installed.");
-      setTimeout(() => {
-        setSubscribemodal(true);
-      }, 2000);
+      // setTimeout(() => {
+      //   setSubscribemodal(true);
+      // }, 2000);
     }
   }, []);
 
@@ -148,6 +149,11 @@ const Dashboard = (props) => {
             breadcrumbItem={props.t("Dashboard")}
           />
 
+          <Row>
+            <Col sm="12">
+              <DemoTestNotif />
+            </Col>
+          </Row>
           <Row>
             <Col xl="4">
               <WelcomeComp />
