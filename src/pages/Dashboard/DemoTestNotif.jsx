@@ -74,7 +74,7 @@ const DemoTestNotif = () => {
   };
   return (
     <Card className="overflow-hidden">
-      <CardBody>
+      {/* <CardBody>
         <CardTitle className="mb-4">Test Push Notification</CardTitle>
         <Row>
           <Col sm="12">
@@ -116,7 +116,7 @@ const DemoTestNotif = () => {
             </div>
           </Col>
         </Row>
-      </CardBody>
+      </CardBody> */}
     </Card>
   );
 };

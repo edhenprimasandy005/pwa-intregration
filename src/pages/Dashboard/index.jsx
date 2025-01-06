@@ -151,7 +151,7 @@ const Dashboard = (props) => {
 
           <Row>
             <Col sm="12">
-              {/* <DemoTestNotif /> */}
+              <DemoTestNotif />
             </Col>
           </Row>
           <Row>
