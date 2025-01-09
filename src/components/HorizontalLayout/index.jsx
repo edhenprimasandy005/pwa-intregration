@@ -21,6 +21,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import RightSidebar from "../CommonForBoth/RightSidebar";
 import { useLocation } from "react-router-dom";
+import MagicBell, {
+  FloatingNotificationInbox,
+} from "@magicbell/magicbell-react";
+
 const Layout = (props) => {
   const dispatch = useDispatch();
 
@@ -41,7 +45,7 @@ const Layout = (props) => {
     layoutModeType,
     layoutWidth,
     isPreloader,
-    showRightSidebar
+    showRightSidebar,
   } = useSelector(selectLayoutProperties);
 
   /*
@@ -139,6 +143,9 @@ const Layout = (props) => {
       </div>
 
       <div id="layout-wrapper">
+        <MagicBell>
+          {(props) => <FloatingNotificationInbox {...props} />}
+        </MagicBell>
         <Header
           theme={topbarTheme}
           isMenuOpened={isMenuOpened}

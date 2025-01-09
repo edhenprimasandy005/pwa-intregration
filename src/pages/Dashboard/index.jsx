@@ -126,7 +126,7 @@ const Dashboard = (props) => {
 
     return false; // PWA is not installed
   };
-  // if ('serviceWorker' in navigator) {
+  // 
   //   window.addEventListener('load', async () => {
   //     try {
   //       const registration = await navigator.serviceWorker.register('/sw.js');
@@ -189,7 +189,7 @@ const Dashboard = (props) => {
                 ))}
               </Row>
 
-              <Card>
+              {/* <Card>
                 <CardBody>
                   <div className="d-sm-flex flex-wrap">
                     <h4 className="card-title mb-4">Email Sent</h4>
@@ -243,13 +243,12 @@ const Dashboard = (props) => {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="clearfix"></div> */}
                   <StackedColumnChart
                     periodData={periodData}
                     dataColors='["--bs-primary", "--bs-warning", "--bs-success"]'
                   />
                 </CardBody>
-              </Card>
+              </Card> */}
             </Col>
           </Row>
 
@@ -266,11 +265,11 @@ const Dashboard = (props) => {
             </Col>
           </Row>
 
-          <Row>
+          {/* <Row>
             <Col lg="12">
               <LatestTranaction />
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </div>
 
