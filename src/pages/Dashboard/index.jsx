@@ -45,7 +45,11 @@ import { withTranslation } from "react-i18next";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
-import DemoTestNotif from "./DemoTestNotif";
+import MagicBellNotification from "../../components/SendMagicBellNotification";
+import MagicBellSubsribtion from "../../components/MagicBellSubsribtion";
+import SendMagicBellNotification from "../../components/SendMagicBellNotification";
+
+// import DemoTestNotif from "./DemoTestNotif";
 
 const Dashboard = (props) => {
   const [modal, setmodal] = useState(false);
@@ -151,7 +155,8 @@ const Dashboard = (props) => {
 
           <Row>
             <Col sm="12">
-              <DemoTestNotif />
+            <SendMagicBellNotification />
+              {/* <DemoTestNotif /> */}
             </Col>
           </Row>
           <Row>
@@ -274,64 +279,7 @@ const Dashboard = (props) => {
       </div>
 
       {/* subscribe ModalHeader */}
-      <Modal
-        isOpen={subscribemodal}
-        role="dialog"
-        autoFocus={true}
-        centered
-        data-toggle="modal"
-        toggle={() => {
-          setSubscribemodal(!subscribemodal);
-        }}
-      >
-        <div>
-          <ModalHeader
-            className="border-bottom-0"
-            toggle={() => {
-              setSubscribemodal(!subscribemodal);
-            }}
-          ></ModalHeader>
-        </div>
-        <div className="modal-body">
-          <div className="text-center mb-4">
-            <div className="avatar-md mx-auto mb-4">
-              <div className="avatar-title bg-light  rounded-circle text-primary h1">
-                <i className="mdi mdi-cellphone-cog"></i>
-              </div>
-            </div>
-
-            <div className="row justify-content-center">
-              <div className="col-xl-10">
-                <h4 className="text-primary">Progressive Web App!</h4>
-                <p className="text-muted font-size-14 mb-4">
-                  Make it easier to access.
-                </p>
-                <div className="text-center mt-4">
-                  <Link
-                    onClick={handleInstallClick}
-                    className="btn btn-primary btn-md"
-                  >
-                    Install <i className="mdi mdi-arrow-right ms-1" />
-                  </Link>
-                </div>
-
-                {/* <div
-                  className="input-group rounded bg-light"
-                >
-                  <Input
-                    type="email"
-                    className="form-control bg-transparent border-0"
-                    placeholder="Enter Email address"
-                  />
-                  <Button color="primary" type="button" id="button-addon2">
-                    <i className="bx bxs-paper-plane"></i>
-                  </Button>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <MagicBellSubsribtion />
 
       <Modal
         isOpen={modal}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WebPushClient } from '@magicbell/webpush';
 
 const userCredentials = {
@@ -12,16 +12,12 @@ export const useMagicBell = () => {
     apiKey: userCredentials.apiKey,
     userEmail: userCredentials.userEmail,
   });
-  const handleSubscribe = async () => {
-    if (client.isSubscribed) {
-      client.unsubscribe()
-      setSubscribed(false);
-    } else {
-      client.subscribe()
-      alert('Subscribed to push notifications!');
-      setSubscribed(true);
-    }
-  };
 
-  return { subscribed, handleSubscribe };
+  useEffect(() => {
+    setSubscribed(client.isSubscribed());
+    return () => {
+    }
+  }, [client.isSubscribed()])
+
+  return { subscribed };
 };

@@ -383,7 +383,7 @@ const Header = (props) => {
             </div>
 
             {/* <NotificationDropdown /> */}
-            <div className="position-relative dropdown d-none d-lg-inline-block ms-1">
+            <div className="position-relative dropdown d-inline-block ms-1">
               <div className="btn header-item noti-icon align-content-center">
                 <MagicBell>
                   {(props) => <FloatingNotificationInbox {...props} placement="bottom-start" />}

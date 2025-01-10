@@ -11,7 +11,6 @@ export default defineConfig({
       workbox: {
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        swDest: 'sw.js',
       },
       registerType: "autoUpdate",
       injectRegister: 'auto',
@@ -19,8 +18,8 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "My PWA App",
-        short_name: "PWA",
+        name: "M-PMS MagicBell PWA",
+        short_name: "M-PMS",
         display: 'standalone',
         start_url: '/',
         background_color: '#ffffff',
