@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { WebPushClient } from "@magicbell/webpush";
+import { WebPushClient, registerServiceWorker } from "@magicbell/webpush";
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap";
 
 const userCredentials = {
@@ -34,6 +34,11 @@ const MagicBellSubscription = () => {
     checkSubscription();
   }, [client.isSubscribed]);
 
+  useEffect(() => {
+    client.getAuthToken().then((token) => {
+      registerServiceWorker('./sw.js');
+    });
+  }, [client.isSubscribed()]);
   const handleSubscribe = async () => {
     setLoading(true);
     setError(null);
@@ -45,6 +50,7 @@ const MagicBellSubscription = () => {
         if (permission === "granted") {
           // Now proceed to subscribe to MagicBell notifications
           await client.subscribe();
+          console.log('auth token', client.getAuthToken())
           console.log('Successfully subscribed to MagicBell notifications');
           setLoading(false);
           setSubscribemodal(false); // Close modal after permission is granted
