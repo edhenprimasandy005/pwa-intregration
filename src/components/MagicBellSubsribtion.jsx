@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { WebPushClient, registerServiceWorker } from "@magicbell/webpush";
+import {useConfig} from '@magicbell/react-headless'
 import { Modal, ModalBody, ModalHeader, Button } from "reactstrap";
 
 const userCredentials = {
@@ -11,6 +12,28 @@ const MagicBellSubscription = () => {
   const [subscribemodal, setSubscribemodal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const config = useConfig()
+  const subscribeOptions = useMemo(() => {
+    const host = "https://api.magicbell.com"
+    try {
+      const url = new URL(config.channels?.webPush.config.subscribeUrl || "")
+      return {
+        token: url.searchParams.get("access_token") || "",
+        project: url.searchParams.get("project") || "",
+        host,
+      }
+    } catch (e) {
+      return { token: "", project: "", host }
+    }
+  }, [config])
+
+  useEffect(() => {
+    if (!subscribeOptions.token) {
+      return
+    }
+    registerServiceWorker()
+    // prefetchConfig(subscribeOptions)
+  }, [subscribeOptions])
 
   const client = new WebPushClient({
     apiKey: userCredentials.apiKey,
@@ -34,11 +57,12 @@ const MagicBellSubscription = () => {
     checkSubscription();
   }, [client.isSubscribed]);
 
-  useEffect(() => {
-    client.getAuthToken().then((token) => {
-      registerServiceWorker('./sw.js');
-    });
-  }, [client.isSubscribed()]);
+  // useEffect(() => {
+  //   client.getAuthToken().then((token) => {
+  //     console.log("auth token", token);
+  //     registerServiceWorker('./sw.js');
+  //   });
+  // }, [client.isSubscribed()]);
   const handleSubscribe = async () => {
     setLoading(true);
     setError(null);
