@@ -8,12 +8,15 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      workbox: {
-        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-      },
       registerType: "autoUpdate",
       injectRegister: 'auto',
+      strategies: 'injectManifest',
+      injectManifest: {
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+        swSrc: 'public/sw.js', // Path to your custom service worker
+        swDest: 'dist/sw.js',   // Output path for the service worker
+        injectionPoint: undefined,
+      },
       devOptions: {
         enabled: false,
       },
@@ -40,8 +43,4 @@ export default defineConfig({
       },
     }),
   ],
-  esbuild: {
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
-  },
 });

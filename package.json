@@ -126,7 +126,8 @@
     "babel-preset-stage-0": "^6.0.15",
     "sass": "^1.83.1",
     "vite": "^4.4.8",
-    "vite-plugin-pwa": "^0.21.1"
+    "vite-plugin-pwa": "^0.21.1",
+    "workbox-precaching": "^7.3.0"
   },
   "eslintConfig": {
     "extends": [
